@@ -5,11 +5,12 @@ const splitter = document.querySelector('.hero>hr');
 let splitterX = innerWidth * 0.9;
 
 leftPane.style.width = splitterX + 'px';
+
 hero.onmousemove = follow;
 hero.onmousewheel = roll;
 hero.onclick = jump;
 splitter.onmousedown = drag;
-
+window.onkeydown = window.onkeyup = animate;
 
 function follow(e) {
   if (!e.shiftKey) return;
@@ -49,14 +50,37 @@ function drag(e) {
 
   document.onmousemove = e => {
     const deltaX = e.clientX - x;
-    
+
     leftPane.style.width = Math.max(0, splitterX + deltaX) + 'px';
   };
 
   document.onmouseup = e => {
     const deltaX = e.x - x;
-    
+
     splitterX = Math.max(0, splitterX + deltaX);
     document.onmousemove = document.onmouseup = null;
   };
+}
+
+function animate(e) {
+  if (e.key !== 'Control' && e.key !== 'Meta' || e.repeat) return;
+
+  if (e.type === 'keydown') {
+    leftPane.style.transition = '1.5s';
+    leftPane.style.width = '0';
+
+    leftPane.ontransitionend = () => {
+      leftPane.style.width = '100%';
+      leftPane.ontransitionend = () => {
+        animate(e);
+      }
+    }
+  } else {
+    leftPane.style.width = splitter.offsetLeft + 'px';
+
+    leftPane.ontransitionend = () => {
+      leftPane.style.transition = null;
+      leftPane.ontransitionend = null;
+    }
+  }
 }

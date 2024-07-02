@@ -46,9 +46,40 @@ h2 {
 }
 
 .hero>hr:active {
+  cursor: unset;
+}
+
+.hero:active {
   cursor: grabbing;
 }
 
+
 .right>h2 {
   right: 0;
+}
+
+.hints {
+  position: absolute;
+  left: 30px;
+  bottom: 10px;
+  transform-origin: bottom left;
+  animation: tilt 7s ease-in-out infinite;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  92.5% {
+    transform: rotate(-10deg);
+  }
+  97.5% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
