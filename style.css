@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+}
+
+.hero {
+  height: 100dvh;
+  display: flex;
+  user-select: none;
+}
+
+.pane {
+  overflow: hidden;
+  position: relative;
+}
+
+.left {
+  background: orange;
+  color: white;
+}
+
+.right {
+  flex-grow: 1;
+  background: white;
+  color: orange;
+}
+
+h2 {
+  padding: 20vmin 0 0 5vmin;
+  position: absolute;
+  box-sizing: border-box;
+  width: 100vw;
+  font-size: 12vmin;
+}
+
+.left>h2 {
+  left: 0;
+}
+
+.hero>hr {
+  width: 10px;
+  margin: 0;
+  border: none;
+  background: black;
+  cursor: grab;
+}
+
+.hero>hr:active {
+  cursor: grabbing;
+}
+
+.right>h2 {
+  right: 0;
+}
