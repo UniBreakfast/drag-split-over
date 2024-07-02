@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .hero {
@@ -74,10 +76,10 @@ h2 {
     transform: rotate(0deg);
   }
   92.5% {
-    transform: rotate(-10deg);
+    transform: rotate(-8deg);
   }
   97.5% {
-    transform: rotate(10deg);
+    transform: rotate(8deg);
   }
   100% {
     transform: rotate(0deg);
