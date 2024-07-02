@@ -6,14 +6,42 @@ let splitterX = innerWidth * 0.9;
 
 leftPane.style.width = splitterX + 'px';
 hero.onmousemove = follow;
-splitter.onmousedown = drag;
 hero.onmousewheel = roll;
+hero.onclick = jump;
+splitter.onmousedown = drag;
+
 
 function follow(e) {
   if (!e.shiftKey) return;
 
   splitterX = Math.max(0, e.x - 5);
   leftPane.style.width = splitterX + 'px';
+}
+
+function roll(e) {
+  e.preventDefault();
+  splitterX = Math.max(0, splitterX + e.deltaY * 1.3);
+
+  leftPane.style.transition = '0.3s';
+  leftPane.style.width = splitterX + 'px';
+
+  leftPane.ontransitionend = () => {
+    leftPane.style.transition = null;
+    leftPane.ontransitionend = null;
+  }
+}
+
+function jump(e) {
+  if (!e.ctrlKey) return;
+
+  splitterX = Math.max(0, e.x - 5);
+  leftPane.style.transition = '0.3s';
+  leftPane.style.width = splitterX + 'px';
+
+  leftPane.ontransitionend = () => {
+    leftPane.style.transition = null;
+    leftPane.ontransitionend = null;
+  }
 }
 
 function drag(e) {
@@ -31,17 +59,4 @@ function drag(e) {
     splitterX += deltaX; 
     document.onmousemove = document.onmouseup = null;
   };
-}
-
-function roll(e) {
-  e.preventDefault();
-  splitterX = Math.max(0, splitterX + e.deltaY * 1.3);
-
-  leftPane.style.transition = '0.3s';
-  leftPane.style.width = splitterX + 'px';
-
-  leftPane.ontransitionend = () => {
-    leftPane.style.transition = null;
-    leftPane.ontransitionend = null;
-  }
 }
