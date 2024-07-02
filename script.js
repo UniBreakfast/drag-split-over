@@ -8,7 +8,6 @@ leftPane.style.width = splitterX + 'px';
 hero.onmousemove = follow;
 hero.onmousewheel = roll;
 hero.onclick = jump;
-hero.oncontextmenu = e => e.preventDefault();
 splitter.onmousedown = drag;
 
 
@@ -33,9 +32,7 @@ function roll(e) {
 }
 
 function jump(e) {
-  if (!e.ctrlKey) return;
-
-  e.preventDefault();
+  if (!e.altKey) return;
 
   splitterX = Math.max(0, e.x - 5);
   leftPane.style.transition = '0.3s';
