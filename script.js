@@ -45,18 +45,18 @@ function jump(e) {
 }
 
 function drag(e) {
-  const x = e.x;
+  const x = e.clientX
 
   document.onmousemove = e => {
-    const deltaX = e.x - x;
+    const deltaX = e.clientX - x;
     
     leftPane.style.width = Math.max(0, splitterX + deltaX) + 'px';
   };
 
   document.onmouseup = e => {
-    const deltaX = Math.max(0, e.x - x);
+    const deltaX = e.x - x;
     
-    splitterX += deltaX; 
+    splitterX = Math.max(0, splitterX + deltaX);
     document.onmousemove = document.onmouseup = null;
   };
 }
