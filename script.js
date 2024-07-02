@@ -8,6 +8,7 @@ leftPane.style.width = splitterX + 'px';
 hero.onmousemove = follow;
 hero.onmousewheel = roll;
 hero.onclick = jump;
+hero.oncontextmenu = e => e.preventDefault();
 splitter.onmousedown = drag;
 
 
