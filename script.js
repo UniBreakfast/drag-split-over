@@ -34,6 +34,7 @@ function drag(e) {
 }
 
 function roll(e) {
+  e.preventDefault();
   splitterX = Math.max(0, splitterX + e.deltaY * 1.3);
 
   leftPane.style.transition = '0.3s';

@@ -30,6 +30,7 @@ h2 {
   box-sizing: border-box;
   width: 100vw;
   font-size: 12vmin;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .left>h2 {
