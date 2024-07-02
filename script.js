@@ -34,6 +34,8 @@ function roll(e) {
 function jump(e) {
   if (!e.ctrlKey) return;
 
+  e.preventDefault();
+
   splitterX = Math.max(0, e.x - 5);
   leftPane.style.transition = '0.3s';
   leftPane.style.width = splitterX + 'px';
