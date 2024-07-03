@@ -1,16 +1,25 @@
 const hero = document.querySelector('.hero');
 const leftPane = document.querySelector('.left.pane');
 const splitter = document.querySelector('.hero>hr');
+const hint = document.querySelector('.hints');
 
 let splitterX = innerWidth * 0.9;
 
 leftPane.style.width = splitterX + 'px';
 
-hero.onmousemove = follow;
-hero.onmousewheel = roll;
-hero.onclick = jump;
-splitter.onmousedown = drag;
-window.onkeydown = window.onkeyup = animate;
+if ('ontouchstart' in window) {
+  hero.ontouchstart = hero.ontouchmove = jump;
+
+  hint.replaceChildren(hint.lastElementChild);
+} else {
+  hero.onmousemove = follow;
+  hero.onmousewheel = roll;
+  hero.onclick = jump;
+  splitter.onmousedown = drag;
+  window.onkeydown = window.onkeyup = animate;
+
+  hint.lastElementChild.remove();
+}
 
 function follow(e) {
   if (!e.shiftKey) return;
@@ -33,9 +42,9 @@ function roll(e) {
 }
 
 function jump(e) {
-  if (!e.altKey) return;
+  if (!e.altKey && !('ontouchstart' in window)) return;
 
-  splitterX = Math.max(0, e.x - 5);
+  splitterX = Math.max(0, (e.x || e.touches[0].clientX) - 5);
   leftPane.style.transition = '0.3s';
   leftPane.style.width = splitterX + 'px';
 
