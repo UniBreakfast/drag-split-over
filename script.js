@@ -39,7 +39,9 @@ function roll(e) {
     
     lastTime = now;
 
-    splitterX = normalize(splitterX + e.beta * 1.3 * deltaTime);
+    if (e.gamma < 1 && e.gamma > -1) return;
+
+    splitterX = normalize(splitterX + e.gamma * 1.3 * deltaTime);
 
   } else if (e.type === 'wheel' || e.type === 'mousewheel') {
     splitterX = normalize(splitterX + e.deltaY * 1.3);
