@@ -10,7 +10,7 @@ leftPane.style.width = splitterX + 'px';
 
 if ('ontouchstart' in window) {
   hero.ontouchstart = hero.ontouchmove = jump;
-  window.ondeviceorientation = roll;
+  window.ondeviceorientation = window.ondevicemotion = roll;
 
   hint.replaceChildren(hint.lastElementChild);
 } else {
@@ -43,6 +43,11 @@ function roll(e) {
 
     splitterX = normalize(splitterX + e.gamma * 1.3 * deltaTime);
 
+  } else if (e.type === 'devicemotion') {
+    if (e.acceleration.x < 0.5 && e.acceleration.x > -0.5) return;
+
+    splitterX = normalize(splitterX + e.acceleration.x * 1.3);
+    
   } else if (e.type === 'wheel' || e.type === 'mousewheel') {
     splitterX = normalize(splitterX + e.deltaY * 1.3);
   }
