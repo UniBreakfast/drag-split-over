@@ -39,7 +39,7 @@ function roll(e) {
     
     lastTime = now;
 
-    if (e.gamma < 1 && e.gamma > -1) return;
+    if (e.gamma < 5 && e.gamma > -5) return;
 
     splitterX = normalize(splitterX + e.gamma * 1.3 * deltaTime);
 
