@@ -4,11 +4,13 @@ const splitter = document.querySelector('.hero>hr');
 const hint = document.querySelector('.hints');
 
 let splitterX = innerWidth * 0.9;
+let lastTime = 0;
 
 leftPane.style.width = splitterX + 'px';
 
 if ('ontouchstart' in window) {
   hero.ontouchstart = hero.ontouchmove = jump;
+  window.ondeviceorientation = roll;
 
   hint.replaceChildren(hint.lastElementChild);
 } else {
@@ -24,13 +26,24 @@ if ('ontouchstart' in window) {
 function follow(e) {
   if (!e.shiftKey) return;
 
-  splitterX = Math.max(0, e.x - 5);
+  splitterX = normalize(e.x - 5);
   leftPane.style.width = splitterX + 'px';
 }
 
 function roll(e) {
   e.preventDefault();
-  splitterX = Math.max(0, splitterX + e.deltaY * 1.3);
+
+  if (e.type === 'deviceorientation') {
+    const now = Date.now();
+    const deltaTime = now - lastTime;
+    
+    lastTime = now;
+
+    splitterX = normalize(splitterX + e.gamma * 1.3 * deltaTime);
+
+  } else if (e.type === 'wheel' || e.type === 'mousewheel') {
+    splitterX = normalize(splitterX + e.deltaY * 1.3);
+  }
 
   leftPane.style.transition = '0.3s';
   leftPane.style.width = splitterX + 'px';
@@ -44,7 +57,7 @@ function roll(e) {
 function jump(e) {
   if (!e.altKey && !('ontouchstart' in window)) return;
 
-  splitterX = Math.max(0, (e.x || e.touches[0].clientX) - 5);
+  splitterX = normalize((e.x || e.touches[0].clientX) - 5);
   leftPane.style.transition = '0.3s';
   leftPane.style.width = splitterX + 'px';
 
@@ -60,13 +73,13 @@ function drag(e) {
   document.onmousemove = e => {
     const deltaX = e.clientX - x;
 
-    leftPane.style.width = Math.max(0, splitterX + deltaX) + 'px';
+    leftPane.style.width = normalize(splitterX + deltaX) + 'px';
   };
 
   document.onmouseup = e => {
     const deltaX = e.x - x;
 
-    splitterX = Math.max(0, splitterX + deltaX);
+    splitterX = normalize(splitterX + deltaX);
     document.onmousemove = document.onmouseup = null;
   };
 }
@@ -76,20 +89,27 @@ function animate(e) {
 
   if (e.type === 'keydown') {
     leftPane.style.transition = '1.5s';
-    leftPane.style.width = '0';
+    leftPane.style.width = '1px';
+    splitterX = 1;
 
     leftPane.ontransitionend = () => {
-      leftPane.style.width = '100%';
+      splitterX = innerWidth - 11
+      leftPane.style.width = splitterX + 'px';
       leftPane.ontransitionend = () => {
         animate(e);
       }
     }
   } else {
-    leftPane.style.width = splitter.offsetLeft + 'px';
+    splitterX = splitter.offsetLeft;
+    leftPane.style.width = splitterX + 'px';
 
     leftPane.ontransitionend = () => {
       leftPane.style.transition = null;
       leftPane.ontransitionend = null;
     }
   }
+}
+
+function normalize(x) {
+  return Math.max(1, Math.min(innerWidth - 11, x));
 }
