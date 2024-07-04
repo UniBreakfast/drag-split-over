@@ -41,15 +41,15 @@ function roll(e) {
 
     if (e.gamma < 5 && e.gamma > -5) return;
 
-    splitterX = normalize(splitterX + e.gamma * 1.3 * deltaTime);
+    splitterX = normalize(splitterX + e.gamma * 0.3 * deltaTime);
 
   } else if (e.type === 'devicemotion') {
     if (e.acceleration.x < 0.2 && e.acceleration.x > -0.2) return;
 
-    splitterX = normalize(splitterX + e.acceleration.x * 0.3);
+    splitterX = normalize(splitterX + e.acceleration.x);
 
   } else if (e.type === 'wheel' || e.type === 'mousewheel') {
-    splitterX = normalize(splitterX + e.deltaY * 0.3);
+    splitterX = normalize(splitterX + e.deltaY);
   }
 
   leftPane.style.transition = '0.3s';
