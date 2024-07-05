@@ -66,6 +66,7 @@ h2 {
   bottom: 10px;
   transform-origin: bottom left;
   animation: tilt 7s ease-in-out infinite;
+  user-select: none;
 }
 
 @keyframes tilt {
